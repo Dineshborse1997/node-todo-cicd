@@ -1,111 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Dinesh</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                color: #333;
-                margin: 0;
-                padding: 0;
-            }
+<head>
+    <title>Todo List App</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #4CAF50, #81C784);
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
 
-            h1 {
-                background-color: #4CAF50;
-                color: white;
-                margin: 0;
-                padding: 20px;
-                text-align: center;
-            }
+        h1 {
+            background-color: #388E3C;
+            color: white;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
 
-            ul {
-                list-style: none;
-                padding: 0;
-            }
+        .container {
+            width: 90%;
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+        }
 
-            ul li {
-                background: #fff;
-                border: 1px solid #ddd;
-                margin-bottom: 10px;
-                padding: 10px;
-                position: relative;
-            }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
 
-            ul li a {
-                color: #333;
-                text-decoration: none;
-                font-weight: bold;
-            }
+        ul li {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+            padding: 10px;
+            position: relative;
+            border-radius: 5px;
+        }
 
-            ul li a:hover {
-                color: #4CAF50;
-            }
+        .delete-btn, .edit-btn {
+            position: absolute;
+            top: 10px;
+            font-weight: bold;
+            text-decoration: none;
+        }
 
-            .delete-btn {
-                color: red;
-                position: absolute;
-                right: 10px;
-                top: 10px;
-            }
+        .delete-btn {
+            right: 10px;
+            color: red;
+        }
 
-            .edit-btn {
-                color: #FFC107;
-                position: absolute;
-                right: 40px;
-                top: 10px;
-            }
+        .edit-btn {
+            right: 40px;
+            color: #FFC107;
+        }
 
-            form {
-                background: #fff;
-                padding: 20px;
-                margin-top: 20px;
-            }
+        form {
+            margin-top: 20px;
+        }
 
-            label {
-                display: block;
-                margin-bottom: 10px;
-            }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
 
-            input[type="text"] {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 10px;
-                border: 1px solid #ddd;
-            }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
 
-            input[type="submit"] {
-                background-color: #4CAF50;
-                color: white;
-                border: none;
-                padding: 10px 20px;
-                cursor: pointer;
-            }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-            input[type="submit"]:hover {
-                background-color: #45a049;
-            }
-        </style>
-    </head>
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
 
-    <body>
-        <h1>Do Things</h1>
-        <ul>
-            <% todolist.forEach(function(todo, index) { %>
-            <li>
-                <a href="/todo/delete/<%= index %>" class="delete-btn">✘</a>
-                <a href="/todo/<%= index %>" class="edit-btn">✎</a>
-                <%- todo %>
-            </li>
-            <% }); %>
-        </ul>
+        .login-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Todo App - Jenkins Learning Plan</h1>
 
-        <form action="/todo/add/" method="post">
-            <p>
+    <div class="container">
+        <% if (!loggedIn) { %>
+            <div class="login-title">Login to Continue</div>
+            <form action="/login" method="POST">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" required />
+
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required />
+
+                <input type="submit" value="Login" />
+            </form>
+        <% } else { %>
+            <ul>
+                <% todolist.forEach(function(todo, index) { %>
+                    <li>
+                        <a href="/todo/delete/<%= index %>" class="delete-btn">✘</a>
+                        <a href="/todo/<%= index %>" class="edit-btn">✎</a>
+                        <%- todo %>
+                    </li>
+                <% }); %>
+            </ul>
+
+            <form action="/todo/add/" method="post">
                 <label for="newtodo">What should I do?</label>
                 <input type="text" name="newtodo" id="newtodo" autofocus />
                 <input type="submit" value="Add" />
-            </p>
-        </form>
-    </body>
+            </form>
+        <% } %>
+    </div>
+</body>
 </html>
