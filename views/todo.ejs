@@ -1,20 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Todo List App</title>
+    <title>Todo App - Junoon Batch 8</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(to right, #4CAF50, #81C784);
-            color: #333;
             margin: 0;
             padding: 0;
         }
 
         h1 {
-            background-color: #388E3C;
+            background-color: #2E7D32;
             color: white;
-            margin: 0;
             padding: 20px;
             text-align: center;
         }
@@ -26,7 +24,35 @@
             background: white;
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0px 0px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #388E3C;
         }
 
         ul {
@@ -60,52 +86,20 @@
             color: #FFC107;
         }
 
-        form {
-            margin-top: 20px;
-        }
-
-        label {
-            font-weight: bold;
-            display: block;
-            margin-bottom: 10px;
-        }
-
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ddd;
-            margin-bottom: 15px;
-        }
-
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
-
-        .login-title {
-            text-align: center;
-            font-size: 24px;
+        .section-title {
             margin-bottom: 20px;
+            text-align: center;
+            font-size: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Todo App - Jenkins Learning Plan</h1>
-
+    <h1>Welcome Junoon Batch 8 - Todo App</h1>
     <div class="container">
-        <% if (!loggedIn) { %>
-            <div class="login-title">Login to Continue</div>
-            <form action="/login" method="POST">
+        <% if (!todolist || todolist.length === 0) { %>
+            <div class="section-title">Login to Start Planning</div>
+            <form action="/todo/add/" method="post">
+                <input type="hidden" name="actionType" value="login" />
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" required />
 
@@ -115,6 +109,7 @@
                 <input type="submit" value="Login" />
             </form>
         <% } else { %>
+            <div class="section-title">Your Learning Plan for Jenkins</div>
             <ul>
                 <% todolist.forEach(function(todo, index) { %>
                     <li>
